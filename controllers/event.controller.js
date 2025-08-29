@@ -102,12 +102,8 @@ class EventController {
       if (!event) {
         return next(new AppError("Evento non trovato", 404));
       }
-
       await event.destroy();
-      res.status(204).json({
-        success: true,
-        message: "Evento eliminato con successo",
-      });
+      res.status(204).send();
     } catch (error) {
       console.error("Errore durante l'eliminazione dell'evento:", error);
       next(new AppError("Errore durante l'eliminazione dell'evento", 500));

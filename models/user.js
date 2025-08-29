@@ -16,7 +16,11 @@ User.init({
     type: DataTypes.STRING,
     allowNull: false,
     set(value) {
-      if (value) {
+      if (!value) return;
+      // Se la password sembra già hashata (bcrypt hash = 60 caratteri, inizia con $2)
+      if (typeof value === 'string' && value.length === 60 && value.startsWith('$2')) {
+        this.setDataValue('password', value);
+      } else {
         this.setDataValue('password', bcrypt.hashSync(value, 10));
       }
     },

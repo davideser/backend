@@ -47,27 +47,28 @@ Company.init({
   },
   partnerType: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false
   },
   codiceUnivoco: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false,
+    unique: true
   },
   indirizzo: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false
   },
   capZip: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false
   },
   citta: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false
   },
   prov: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false
   },
   telefonoFisso: {
     type: DataTypes.STRING,
@@ -75,7 +76,7 @@ Company.init({
   },
   cellulare: {
     type: DataTypes.STRING,
-    allowNull: true
+    allowNull: false
   }
 }, {
   sequelize,

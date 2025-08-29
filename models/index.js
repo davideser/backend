@@ -48,14 +48,16 @@ Object.keys(db).forEach(modelName => {
 db.sequelize = sequelize;
 db.Sequelize = Sequelize;
 
-// Sincronizzazione automatica del database
-sequelize
-  .sync({ alter: true })
-  .then(() => {
-    console.log('✅ Database sincronizzato correttamente.');
-  })
-  .catch((error) => {
-    console.error('❌ Errore durante la sincronizzazione del database:', error);
-  });
+// Sincronizzazione automatica del database SOLO in sviluppo
+if (env === 'development') {
+  sequelize
+    .sync({ alter: true })
+    .then(() => {
+      console.log('✅ Database sincronizzato correttamente (DEV MODE).');
+    })
+    .catch((error) => {
+      console.error('❌ Errore durante la sincronizzazione del database:', error);
+    });
+}
 
 module.exports = db;

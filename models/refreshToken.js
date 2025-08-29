@@ -26,7 +26,9 @@ class RefreshToken extends Model {
 RefreshToken.init({
   token: { type: DataTypes.STRING, allowNull: false, unique: true },
   userId: { type: DataTypes.INTEGER, allowNull: false, references: { model: 'Users', key: 'id' }, onDelete: 'CASCADE' },
-  expiresAt: { type: DataTypes.DATE, allowNull: false }
+  expiresAt: { type: DataTypes.DATE, allowNull: false },
+  createdAt: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW },
+  updatedAt: { type: DataTypes.DATE, allowNull: false, defaultValue: DataTypes.NOW }
 }, {
   sequelize,
   modelName: 'RefreshToken',

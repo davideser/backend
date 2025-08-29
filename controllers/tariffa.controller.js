@@ -95,12 +95,8 @@ class TariffaController {
       if (!tariffa) {
         return next(new AppError("Tariffa non trovata", 404));
       }
-
       await tariffa.destroy();
-      res.status(204).json({
-        success: true,
-        message: "Tariffa eliminata con successo",
-      });
+      res.status(204).send();
     } catch (error) {
       console.error("Errore durante l'eliminazione della tariffa:", error);
       next(new AppError("Errore durante l'eliminazione della tariffa", 500));

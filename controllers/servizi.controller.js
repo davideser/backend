@@ -93,12 +93,8 @@ class ServiziController {
       if (!servizio) {
         return next(new AppError("Servizio non trovato", 404));
       }
-
       await servizio.destroy();
-      res.status(204).json({
-        success: true,
-        message: "Servizio eliminato con successo",
-      });
+      res.status(204).send();
     } catch (error) {
       console.error("Errore durante l'eliminazione del servizio:", error);
       next(new AppError("Errore durante l'eliminazione del servizio", 500));

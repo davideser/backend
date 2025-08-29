@@ -101,13 +101,8 @@ class BarcheController {
       if (!barca) {
         return next(new AppError("Barca non trovata", 404));
       }
-
       await barca.destroy();
-
-      res.status(200).json({
-        success: true,
-        message: "Barca eliminata con successo",
-      });
+      res.status(204).send();
     } catch (error) {
       console.error("Errore durante l'eliminazione della barca:", error);
       next(new AppError("Errore durante l'eliminazione della barca", 500));

@@ -1,7 +1,10 @@
+
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-const { User, RefreshToken, Role, Company } = require('../models');
+const { User, RefreshToken, Role, Company, sequelize } = require('../models');
 const blacklist = require('../utils/blacklist');
+const Joi = require('joi');
+const AppError = require('../utils/AppError');
 
 // 📌 Funzione per generare un token JWT
 const generateAccessToken = (user) => {
@@ -13,105 +16,118 @@ const generateAccessToken = (user) => {
 };
 
 // 📌 Login
-exports.login = async (req, res) => {
+exports.login = async (req, res, next) => {
   try {
-    console.log('🔹 Tentativo di login:', req.body);
     const { username, password } = req.body;
     if (!username || !password) {
-      return res.status(400).json({ message: 'Username e password richiesti' });
+      return next(new AppError('Username e password richiesti', 400));
     }
-
     const user = await User.findOne({
       where: { username },
       include: { model: Role, as: 'role' },
     });
-
     if (!user || !bcrypt.compareSync(password, user.password)) {
-      return res.status(401).json({ message: 'Credenziali non valide' });
+      return next(new AppError('Credenziali non valide', 401));
     }
-
     const accessToken = generateAccessToken(user);
     const refreshToken = await RefreshToken.createToken(user);
-
-    console.log('✅ Login riuscito!');
-    res.status(200).json({ accessToken, refreshToken, user });
+    // Non restituire la password hashata
+    const userSafe = { ...user.toJSON() };
+    delete userSafe.password;
+    res.status(200).json({ accessToken, refreshToken, user: userSafe });
   } catch (error) {
-    console.error('❌ Errore durante il login:', error);
-    res.status(500).json({ message: 'Errore nel login', error: error.message });
+    next(new AppError('Errore nel login', 500));
   }
 };
 
 // 📌 Logout
-exports.logout = async (req, res) => {
+exports.logout = async (req, res, next) => {
   try {
-    blacklist.add(req.headers.authorization.split(' ')[1]);
+    const token = req.headers.authorization.split(' ')[1];
+    blacklist.push(token); // Corretto: push invece di add
     await RefreshToken.destroy({ where: { userId: req.user.id } });
     res.status(200).json({ message: 'Logout effettuato con successo' });
   } catch (error) {
-    res.status(500).json({ message: 'Errore nel logout' });
+    next(new AppError('Errore nel logout', 500));
   }
 };
 
 // 📌 Refresh Token
-exports.refreshToken = async (req, res) => {
+exports.refreshToken = async (req, res, next) => {
   try {
     const { refreshToken } = req.body;
-    if (!refreshToken) return res.status(400).json({ message: 'Refresh token richiesto' });
-
+    if (!refreshToken) return next(new AppError('Refresh token richiesto', 400));
     const validToken = await RefreshToken.verifyToken(refreshToken);
     const user = await User.findByPk(validToken.userId);
-
     const newAccessToken = generateAccessToken(user);
     await validToken.destroy();
     const newRefreshToken = await RefreshToken.createToken(user);
-
     res.status(200).json({ accessToken: newAccessToken, refreshToken: newRefreshToken });
   } catch (error) {
-    res.status(401).json({ message: error.message });
+    next(new AppError(error.message, 401));
   }
 };
 
-// 📌 Recupera tutti gli utenti
-exports.getAllUsers = async (req, res) => {
+// 📌 Recupera tutti gli utenti (con paginazione)
+exports.getAllUsers = async (req, res, next) => {
   try {
-    const users = await User.findAll({
+    const { page = 1, limit = 20 } = req.query;
+    const offset = (parseInt(page) - 1) * parseInt(limit);
+    const { count, rows: users } = await User.findAndCountAll({
       attributes: ['id', 'username', 'email', 'roleId', 'companyId', 'status', 'createdAt'],
       include: [
         { model: Role, as: 'role', attributes: ['id', 'name'] },
         { model: Company, as: 'company', attributes: ['name'] }
-      ]
+      ],
+      limit: parseInt(limit),
+      offset
     });
-
-    res.status(200).json({ success: true, data: users });
+    // Rimuovi la password da ogni utente
+    const usersSafe = users.map(u => {
+      const obj = { ...u.toJSON() };
+      delete obj.password;
+      return obj;
+    });
+    res.status(200).json({
+      success: true,
+      data: usersSafe,
+      total: count,
+      page: parseInt(page),
+      totalPages: Math.ceil(count / limit)
+    });
   } catch (error) {
-    console.error("❌ Errore nel recupero utenti:", error);
-    res.status(500).json({ message: 'Errore nel recupero utenti' });
+    next(new AppError('Errore nel recupero utenti', 500));
   }
 };
 
-// 📌 Crea un nuovo utente o un partner con azienda associata
-exports.createUser = async (req, res) => {
+// 📌 Crea un nuovo utente o un partner con azienda associata (con validazione e transazione)
+const userSchema = Joi.object({
+  username: Joi.string().required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).required(),
+  roleId: Joi.number().required(),
+  companyId: Joi.number().optional(),
+  emailPartner: Joi.string().email().optional(),
+  ragioneSociale: Joi.string().optional(),
+  codiceFiscale: Joi.string().optional(),
+  partitaIva: Joi.string().optional(),
+});
+
+exports.createUser = async (req, res, next) => {
+  const t = await sequelize.transaction();
   try {
-    console.log("🔍 Dati ricevuti nel backend:", req.body);
-
-    const { username, email, password, roleId, companyId } = req.body;
-    if (!username || !email || !password || !roleId) {
-      return res.status(400).json({ message: 'Tutti i campi obbligatori devono essere compilati.' });
-    }
-
+    const value = await userSchema.validateAsync(req.body);
+    const { username, email, password, roleId, companyId } = value;
     let newCompanyId = companyId;
-
     if (Number(roleId) === 2 && !companyId) {
-      const { emailPartner, ragioneSociale, codiceFiscale, partitaIva } = req.body;
+      const { emailPartner, ragioneSociale, codiceFiscale, partitaIva } = value;
       if (!ragioneSociale || !emailPartner || !codiceFiscale || !partitaIva) {
-        return res.status(400).json({ message: 'Tutti i campi aziendali sono obbligatori per i partner.' });
+        await t.rollback();
+        return next(new AppError('Tutti i campi aziendali sono obbligatori per i partner.', 400));
       }
-
-      const newCompany = await Company.create(req.body);
+      const newCompany = await Company.create(value, { transaction: t });
       newCompanyId = newCompany.id;
-      console.log("✅ Compagnia creata con ID:", newCompanyId);
     }
-
     const hashedPassword = bcrypt.hashSync(password, 10);
     const newUser = await User.create({
       username,
@@ -119,69 +135,97 @@ exports.createUser = async (req, res) => {
       password: hashedPassword,
       roleId,
       companyId: newCompanyId
-    });
-
-    console.log("✅ Utente creato:", newUser.toJSON());
-    res.status(201).json({ user: newUser, companyId: newCompanyId });
+    }, { transaction: t });
+    await t.commit();
+    const userSafe = { ...newUser.toJSON() };
+    delete userSafe.password;
+    res.status(201).json({ user: userSafe, companyId: newCompanyId });
   } catch (error) {
-    console.error('❌ Errore nella creazione utente:', error);
-    res.status(500).json({ message: 'Errore nella creazione utente', error: error.message });
+    await t.rollback();
+    next(new AppError('Errore nella creazione utente', 500));
   }
 };
 
 // 📌 Recupera utente per ID
-exports.getUserById = async (req, res) => {
+exports.getUserById = async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.userId, { include: { model: Role, as: 'role' } });
-    if (!user) return res.status(404).json({ message: 'Utente non trovato' });
-    res.status(200).json(user);
+    if (!user) return next(new AppError('Utente non trovato', 404));
+    const userSafe = { ...user.toJSON() };
+    delete userSafe.password;
+    res.status(200).json(userSafe);
   } catch (error) {
-    res.status(500).json({ message: 'Errore nel recupero utente' });
+    next(new AppError('Errore nel recupero utente', 500));
   }
 };
 
-// 📌 Aggiorna utente
-exports.updateUser = async (req, res) => {
+// 📌 Aggiorna utente (solo Admin)
+exports.updateUser = async (req, res, next) => {
   try {
+    if (!req.user || req.user.role !== 'Admin') {
+      return next(new AppError('Accesso negato', 403));
+    }
     const { username, email, roleId } = req.body;
     const updated = await User.update(
       { username, email, roleId },
       { where: { id: req.params.userId } }
     );
-    if (!updated[0]) return res.status(404).json({ message: 'Utente non trovato' });
+    if (!updated[0]) return next(new AppError('Utente non trovato', 404));
     res.status(200).json({ message: 'Utente aggiornato con successo' });
   } catch (error) {
-    res.status(500).json({ message: 'Errore nell\'aggiornamento utente' });
+    next(new AppError('Errore nell\'aggiornamento utente', 500));
   }
 };
 
-// 📌 Elimina utente
-exports.deleteUser = async (req, res) => {
+// 📌 Elimina utente (solo Admin)
+exports.deleteUser = async (req, res, next) => {
   try {
+    if (!req.user || req.user.role !== 'Admin') {
+      return next(new AppError('Accesso negato', 403));
+    }
     const deleted = await User.destroy({ where: { id: req.params.userId } });
-    if (!deleted) return res.status(404).json({ message: 'Utente non trovato' });
+    if (!deleted) return next(new AppError('Utente non trovato', 404));
     res.status(200).json({ message: 'Utente eliminato con successo' });
   } catch (error) {
-    res.status(500).json({ message: 'Errore nell\'eliminazione utente' });
+    next(new AppError('Errore nell\'eliminazione utente', 500));
   }
 };
 
-// 📌 Dichiarazione esplicita della funzione createPartner
-exports.createPartner = async (req, res) => {
+// 📌 Dichiarazione esplicita della funzione createPartner (con validazione Joi e transazione)
+const partnerSchema = Joi.object({
+  username: Joi.string().required(),
+  email: Joi.string().email().required(),
+  password: Joi.string().min(6).required(),
+  roleId: Joi.number().required(),
+  emailPartner: Joi.string().email().required(),
+  ragioneSociale: Joi.string().required(),
+  cap: Joi.string().required(),
+  pv: Joi.string().required(),
+  codiceFiscale: Joi.string().required(),
+  partitaIva: Joi.string().required(),
+  partnerType: Joi.string().required(),
+  codiceUnivoco: Joi.string().required(),
+  indirizzo: Joi.string().required(),
+  capZip: Joi.string().required(),
+  citta: Joi.string().required(),
+  prov: Joi.string().required(),
+  telefonoFisso: Joi.string().allow(null, ''),
+  cellulare: Joi.string().required(),
+});
+
+exports.createPartner = async (req, res, next) => {
+  const t = await sequelize.transaction();
   try {
+    const value = await partnerSchema.validateAsync(req.body);
     const {
       username, email, password, roleId,
       emailPartner, ragioneSociale, cap, pv, codiceFiscale, partitaIva,
       partnerType, codiceUnivoco, indirizzo, capZip, citta, prov, telefonoFisso, cellulare
-    } = req.body;
+    } = value;
 
-    if (!username || !email || !password || !roleId) {
-      return res.status(400).json({ message: 'Tutti i campi obbligatori devono essere compilati.' });
-    }
-
-    // Creazione della compagnia
+    // Creazione della compagnia in transazione
     const newCompany = await Company.create({
-      name: ragioneSociale, // Usa ragioneSociale come nome azienda
+      name: ragioneSociale,
       ragioneSociale,
       cap,
       pv,
@@ -196,11 +240,9 @@ exports.createPartner = async (req, res) => {
       prov,
       telefonoFisso,
       cellulare
-    });
-    
-    
+    }, { transaction: t });
 
-    // Creazione utente associato
+    // Creazione utente associato in transazione
     const hashedPassword = bcrypt.hashSync(password, 10);
     const newUser = await User.create({
       username,
@@ -208,12 +250,15 @@ exports.createPartner = async (req, res) => {
       password: hashedPassword,
       roleId,
       companyId: newCompany.id
-    });
+    }, { transaction: t });
 
-    res.status(201).json({ user: newUser, company: newCompany });
+    await t.commit();
+    const userSafe = { ...newUser.toJSON() };
+    delete userSafe.password;
+    res.status(201).json({ user: userSafe, company: newCompany });
   } catch (error) {
-    console.error('❌ Errore nella creazione del partner:', error);
-    res.status(500).json({ message: 'Errore nella creazione del partner', error: error.message });
+    await t.rollback();
+    next(new AppError('Errore nella creazione del partner', 500));
   }
 };
 

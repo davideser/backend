@@ -1,0 +1,49 @@
+Arguments: 
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add helmet
+
+PATH: 
+  C:\Program Files (x86)\Common Files\Oracle\Java\java8path;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Program Files (x86)\VMware\VMware Player\bin\;C:\Program Files\Eclipse Adoptium\jdk-11.0.17.8-hotspot\bin;C:\Python311\Scripts\;C:\Python311\;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\PuTTY\;C:\Program Files\nodejs\;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\dotnet\;C:\Program Files\NVIDIA Corporation\NVIDIA app\NvDLISR;C:\Users\Bugzfun\AppData\Local\Android\Sdk\platform-tools;C:\Users\Bugzfun\AppData\Local\Android\Sdk\tools;C:\Users\Bugzfun\AppData\Local\Microsoft\WindowsApps;C:\Users\Bugzfun\AppData\Local\atom\bin;C:\Users\Bugzfun\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Bugzfun\AppData\Local\Yarn\bin;C:\Users\Bugzfun\AppData\Roaming\npm;C:\Users\Bugzfun\AppData\Local\Programs\Ollama;C:\Users\Bugzfun\AppData\Local\Microsoft\WindowsApps;;c:\Users\Bugzfun\AppData\Roaming\Code\User\globalStorage\github.copilot-chat\debugCommand
+
+Yarn version: 
+  1.22.19
+
+Node version: 
+  18.20.4
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: EPERM: operation not permitted, unlink 'C:\Users\Bugzfun\Desktop\Siti\CapriSeaService\gestionale\backend\node_modules\bcrypt\lib\binding\napi-v3\bcrypt_lib.node'
+
+npm manifest: 
+  {
+    "name": "backendcapri",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+      "bcrypt": "^5.1.1",
+      "body-parser": "^1.20.2",
+      "cors": "^2.8.5",
+      "dotenv": "^16.4.5",
+      "express": "^4.18.3",
+      "joi": "^17.13.3",
+      "jsonwebtoken": "^9.0.2",
+      "mysql2": "^3.9.2",
+      "sequelize": "^6.37.1",
+      "sqlite3": "^5.1.7",
+      "winston": "^3.17.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

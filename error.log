@@ -1,0 +1,119 @@
+2025-01-11T15:18:07.455Z [ERROR]: Utente non trovato
+2025-01-11T15:19:39.691Z [ERROR]: Password non valida
+2025-01-11T15:19:50.832Z [ERROR]: Password non valida
+2025-01-11T15:23:45.716Z [ERROR]: Password non valida
+2025-01-11T15:25:21.376Z [ERROR]: Password non valida
+2025-01-11T15:30:37.419Z [ERROR]: Password non valida
+2025-01-11T15:30:47.808Z [ERROR]: Password non valida
+2025-01-11T16:07:59.806Z [ERROR]: Utente non trovato
+2025-01-11T21:30:50.018Z [ERROR]: Dati non validi: "nomeServizio" is required
+2025-01-11T22:29:23.974Z [ERROR]: Utente non trovato
+2025-01-11T22:40:11.242Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:40:24.723Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:41:21.008Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:41:58.129Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:45:36.219Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:45:37.995Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:45:48.043Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:47:55.909Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:51:16.160Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:51:55.988Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:51:58.452Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:51:59.660Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:52:00.640Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:52:56.446Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:52:57.349Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:53:10.917Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:57:16.963Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:57:20.808Z [ERROR]: secretOrPrivateKey must have a value
+2025-01-11T22:57:29.942Z [ERROR]: Table 'capri.refreshtokens' doesn't exist
+2025-01-11T23:04:37.683Z [ERROR]: Table 'capri.refreshtokens' doesn't exist
+2025-01-11T23:07:22.385Z [ERROR]: Table 'capri.refreshtokens' doesn't exist
+2025-01-11T23:07:23.036Z [ERROR]: Table 'capri.refreshtokens' doesn't exist
+2025-01-11T23:07:32.161Z [ERROR]: Table 'capri.refreshtokens' doesn't exist
+2025-01-11T23:09:12.412Z [ERROR]: Table 'capri.refreshtokens' doesn't exist
+2025-01-11T23:09:53.831Z [ERROR]: Table 'capri.refreshtokens' doesn't exist
+2025-01-11T23:10:02.456Z [ERROR]: Table 'capri.refreshtokens' doesn't exist
+2025-01-11T23:15:29.051Z [ERROR]: Table 'capri.refreshtokens' doesn't exist
+2025-01-13T13:59:48.302Z [ERROR]: Dati non validi: "nomeTariffa" is required
+2025-01-13T14:34:51.772Z [ERROR]: Unknown column 'Role.name' in 'field list'
+2025-01-13T14:34:57.526Z [ERROR]: Unknown column 'Role.name' in 'field list'
+2025-01-13T14:35:48.425Z [ERROR]: Unknown column 'Role.name' in 'field list'
+2025-01-13T14:48:20.925Z [ERROR]: Unknown column 'Role.name' in 'field list'
+2025-01-13T14:52:16.158Z [ERROR]: Unknown column 'Role.name' in 'field list'
+2025-01-13T14:56:25.093Z [ERROR]: Unknown column 'Role.name' in 'field list'
+2025-01-13T15:01:38.749Z [ERROR]: Unknown column 'Role.name' in 'field list'
+2025-01-13T15:32:42.291Z [ERROR]: "password" length must be at least 6 characters long
+2025-01-14T17:00:22.033Z [ERROR]: "password" length must be at least 6 characters long
+2025-01-14T17:02:39.035Z [ERROR]: "roleId" is not allowed
+2025-01-14T17:05:11.519Z [ERROR]: "roleId" is not allowed
+2025-01-14T17:05:24.152Z [ERROR]: "roleId" must be one of [Admin, Marinaio, Partner, Blocked]
+2025-01-14T17:06:00.890Z [ERROR]: "roleId" must be one of [Admin, Marinaio, Partner, Blocked]
+2025-01-14T17:07:49.150Z [ERROR]: "roleId" must be one of [Admin, Marinaio, Partner, Blocked]
+2025-01-14T17:24:20.316Z [ERROR]: Ruolo non valido
+2025-01-14T17:28:06.686Z [ERROR]: Ruolo non valido
+2025-01-14T17:31:09.776Z [ERROR]: Ruolo non valido
+2025-01-14T17:52:32.111Z [ERROR]: Ruolo non valido
+2025-01-14T17:52:45.290Z [ERROR]: Ruolo non valido
+2025-01-14T17:54:40.567Z [ERROR]: Ruolo non valido
+2025-01-14T17:56:33.579Z [ERROR]: Ruolo non valido
+2025-01-14T17:58:07.592Z [ERROR]: Ruolo non valido
+2025-01-14T17:59:31.754Z [ERROR]: Ruolo non valido
+2025-01-17T10:53:17.029Z [ERROR]: Utente non trovato
+2025-01-17T10:53:21.380Z [ERROR]: Utente non trovato
+2025-01-17T11:16:13.927Z [ERROR]: Password non valida
+2025-01-17T11:16:19.415Z [ERROR]: Password non valida
+2025-01-17T11:16:24.503Z [ERROR]: Password non valida
+2025-01-17T11:16:47.759Z [ERROR]: Password non valida
+2025-01-17T11:21:27.364Z [ERROR]: Dati non validi: "nomeTariffa" is required
+2025-01-17T17:41:06.208Z [ERROR]: Ruolo non valido
+2025-01-17T18:57:29.241Z [ERROR]: Ruolo non valido
+2025-01-17T18:58:17.429Z [ERROR]: Ruolo non valido
+2025-01-17T18:58:21.955Z [ERROR]: Ruolo non valido
+2025-01-17T18:58:30.877Z [ERROR]: Ruolo non valido
+2025-01-17T19:00:14.864Z [ERROR]: Ruolo non valido
+2025-01-17T19:00:23.818Z [ERROR]: Ruolo non valido
+2025-01-17T19:00:28.754Z [ERROR]: Ruolo non valido
+2025-01-17T19:06:52.398Z [ERROR]: Ruolo non valido
+2025-01-17T19:09:47.731Z [ERROR]: Ruolo non valido
+2025-01-17T19:10:02.079Z [ERROR]: Ruolo non valido
+2025-01-17T19:11:04.572Z [ERROR]: Ruolo non valido
+2025-01-17T19:13:10.722Z [ERROR]: Ruolo non valido
+2025-01-17T19:13:21.117Z [ERROR]: Ruolo non valido
+2025-01-17T19:24:09.979Z [ERROR]: Ruolo non valido
+2025-01-17T19:32:24.307Z [ERROR]: Ruolo non valido
+2025-01-17T19:33:00.330Z [ERROR]: Ruolo non valido
+2025-01-17T19:34:09.408Z [ERROR]: Ruolo non valido
+2025-01-17T20:23:39.171Z [ERROR]: Ruolo non valido
+2025-01-17T20:24:15.225Z [ERROR]: Ruolo non valido
+2025-01-17T20:33:10.720Z [ERROR]: Ruolo non valido
+2025-01-17T20:36:23.605Z [ERROR]: Ruolo non valido
+2025-01-17T20:41:40.815Z [ERROR]: Ruolo non valido
+2025-01-17T20:53:40.389Z [ERROR]: Ruolo non valido
+2025-01-17T20:55:54.294Z [ERROR]: Ruolo non valido
+2025-01-17T20:56:11.312Z [ERROR]: Ruolo non valido
+2025-01-17T20:56:33.298Z [ERROR]: Accesso negato
+2025-01-17T20:56:36.141Z [ERROR]: Accesso negato
+2025-01-17T20:56:37.789Z [ERROR]: Accesso negato
+2025-01-17T20:56:51.887Z [ERROR]: Accesso negato
+2025-01-17T20:57:05.085Z [ERROR]: Accesso negato
+2025-01-17T20:57:06.633Z [ERROR]: Accesso negato
+2025-01-17T20:57:08.236Z [ERROR]: Accesso negato
+2025-01-17T22:08:42.620Z [ERROR]: "roleId" is not allowed
+2025-01-17T23:19:58.673Z [ERROR]: "roleId" is not allowed
+2025-02-12T15:32:32.520Z [ERROR]: Role is associated to User using an alias. You've included an alias (userRole), but it does not match the alias(es) defined in your association (role).
+2025-02-12T15:33:08.366Z [ERROR]: Role is associated to User using an alias. You've included an alias (userRole), but it does not match the alias(es) defined in your association (role).
+2025-02-12T15:34:57.718Z [ERROR]: Role is associated to User using an alias. You've included an alias (userRole), but it does not match the alias(es) defined in your association (role).
+2025-02-12T15:34:58.603Z [ERROR]: Role is associated to User using an alias. You've included an alias (userRole), but it does not match the alias(es) defined in your association (role).
+2025-02-12T15:34:59.057Z [ERROR]: Role is associated to User using an alias. You've included an alias (userRole), but it does not match the alias(es) defined in your association (role).
+2025-02-12T15:35:14.822Z [ERROR]: No database selected
+2025-02-12T15:35:26.942Z [ERROR]: No database selected
+2025-02-12T15:35:27.844Z [ERROR]: No database selected
+2025-02-12T15:58:08.050Z [ERROR]: No database selected
+2025-02-12T15:58:28.789Z [ERROR]: Role is associated to User using an alias. You've included an alias (userRole), but it does not match the alias(es) defined in your association (role).
+2025-02-12T16:11:18.871Z [ERROR]: Role is associated to User using an alias. You've included an alias (userRole), but it does not match the alias(es) defined in your association (role).
+2025-02-12T16:11:20.236Z [ERROR]: Role is associated to User using an alias. You've included an alias (userRole), but it does not match the alias(es) defined in your association (role).
+2025-02-12T16:11:32.759Z [ERROR]: Role is associated to User using an alias. You've included an alias (userRole), but it does not match the alias(es) defined in your association (role).
+2025-02-12T16:12:15.341Z [ERROR]: Role is associated to User using an alias. You've included an alias (userRole), but it does not match the alias(es) defined in your association (role).
+2025-02-12T16:12:35.307Z [ERROR]: Role is associated to User using an alias. You've included an alias (userRole), but it does not match the alias(es) defined in your association (role).
+2025-02-12T16:12:44.092Z [ERROR]: Role is associated to User using an alias. You've included an alias (userRole), but it does not match the alias(es) defined in your association (role).

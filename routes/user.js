@@ -22,6 +22,5 @@ router.post('/logout', verifyToken, userController.logout);
 router.post('/refresh', userController.refreshToken);
 
 // Rotta per creare partner
-router.post('/partners', verifyToken, checkRole(['Admin']), userController.createPartner);
 
 module.exports = router;

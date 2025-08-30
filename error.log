@@ -117,3 +117,50 @@
 2025-02-12T16:12:15.341Z [ERROR]: Role is associated to User using an alias. You've included an alias (userRole), but it does not match the alias(es) defined in your association (role).
 2025-02-12T16:12:35.307Z [ERROR]: Role is associated to User using an alias. You've included an alias (userRole), but it does not match the alias(es) defined in your association (role).
 2025-02-12T16:12:44.092Z [ERROR]: Role is associated to User using an alias. You've included an alias (userRole), but it does not match the alias(es) defined in your association (role).
+2025-08-29T21:53:41.995Z [ERROR]: Username e password richiesti
+2025-08-30T14:11:56.727Z [ERROR]: Credenziali non valide
+2025-08-30T14:12:04.770Z [ERROR]: Credenziali non valide
+2025-08-30T14:12:19.521Z [ERROR]: Credenziali non valide
+2025-08-30T14:56:47.749Z [ERROR]: Dati non validi: "nomeTariffa" is required
+2025-08-30T14:57:21.056Z [ERROR]: Dati non validi: "nomeTariffa" is required
+2025-08-30T15:00:51.954Z [ERROR]: Dati non validi: "prezzo" is required
+2025-08-30T15:01:23.277Z [ERROR]: Dati non validi: "prezzo" is required
+2025-08-30T15:02:45.478Z [ERROR]: Dati non validi: "prezzo" is required
+2025-08-30T15:04:09.827Z [ERROR]: Dati non validi: "nomeTariffa" is required
+2025-08-30T15:05:27.836Z [ERROR]: Dati non validi: "nomeTariffa" is required
+2025-08-30T15:05:44.945Z [ERROR]: Dati non validi: "nomeTariffa" is required
+2025-08-30T15:06:13.354Z [ERROR]: Dati non validi: "prezzo" is required
+2025-08-30T15:06:16.635Z [ERROR]: Dati non validi: "prezzo" is required
+2025-08-30T15:06:25.124Z [ERROR]: Dati non validi: "prezzo" is required
+2025-08-30T15:06:50.248Z [ERROR]: Dati non validi: "nomePartner" is not allowed
+2025-08-30T15:07:14.831Z [ERROR]: Dati non validi: "tipoServizio" is not allowed
+2025-08-30T15:07:42.386Z [ERROR]: Dati non validi: "tariffa" is not allowed
+2025-08-30T15:08:07.974Z [ERROR]: Dati non validi: "nomeBarca" is not allowed
+2025-08-30T15:16:29.374Z [ERROR]: Dati non validi: "nomeBarca" is not allowed
+2025-08-30T15:36:17.114Z [ERROR]: Dati non validi: "prezzo" is required
+2025-08-30T15:37:38.821Z [ERROR]: Dati non validi: "nomePartner" is required
+2025-08-30T15:39:25.033Z [ERROR]: Dati non validi: "nomeTariffa" is not allowed
+2025-08-30T15:39:37.940Z [ERROR]: Dati non validi: "nomeTariffa" is not allowed
+2025-08-30T15:40:12.904Z [ERROR]: Dati non validi: "nomeTariffa" is not allowed
+2025-08-30T15:48:14.849Z [ERROR]: Errore nella creazione utente
+2025-08-30T15:50:07.908Z [ERROR]: Errore nella creazione utente
+2025-08-30T15:50:38.288Z [ERROR]: Errore nella creazione utente
+2025-08-30T15:53:09.623Z [ERROR]: Errore nella creazione utente
+2025-08-30T15:53:13.460Z [ERROR]: Errore nella creazione utente
+2025-08-30T15:57:10.192Z [ERROR]: Errore nella creazione utente
+2025-08-30T15:59:35.300Z [ERROR]: Errore nella creazione utente
+2025-08-30T15:59:47.504Z [ERROR]: Errore nella creazione utente
+2025-08-30T16:00:26.175Z [ERROR]: Errore nella creazione utente
+2025-08-30T16:01:06.836Z [ERROR]: Errore nella creazione utente
+2025-08-30T16:01:14.104Z [ERROR]: Errore nella creazione utente
+2025-08-30T16:01:17.149Z [ERROR]: Errore nella creazione utente
+2025-08-30T16:03:31.272Z [ERROR]: Errore nella creazione utente
+2025-08-30T16:11:18.836Z [ERROR]: Errore nella creazione utente
+2025-08-30T16:13:00.276Z [ERROR]: Errore nella creazione utente
+2025-08-30T16:15:30.784Z [ERROR]: Errore nella creazione utente
+2025-08-30T21:16:17.933Z [ERROR]: Errore nella creazione utente
+2025-08-30T21:16:57.032Z [ERROR]: Errore nella creazione utente
+2025-08-30T21:17:09.924Z [ERROR]: Errore nella creazione utente
+2025-08-30T21:17:18.590Z [ERROR]: Errore nella creazione utente
+2025-08-30T21:17:31.893Z [ERROR]: Errore nella creazione utente
+2025-08-30T21:17:43.989Z [ERROR]: Errore nella creazione utente

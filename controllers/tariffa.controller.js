@@ -2,11 +2,13 @@ const { Tariffa } = require('../models');
 const AppError = require('../utils/AppError');
 const Joi = require('joi');
 
-// Schema di validazione con Joi
+// Schema di validazione con Joi SOLO per i campi realmente presenti in tabella
 const tariffaSchema = Joi.object({
-  nomeTariffa: Joi.string().required(),
-  prezzo: Joi.number().required(),
-  descrizione: Joi.string().optional(),
+  nomePartner: Joi.string().required(),
+  tipoServizio: Joi.string().required(),
+  tariffa: Joi.number().required(),
+  nomeBarca: Joi.string().required(),
+  modelloBarca: Joi.string().required(),
 });
 
 class TariffaController {

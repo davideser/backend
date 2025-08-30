@@ -41,6 +41,7 @@ const EventRoute = require('./routes/event');
 const TariffaRoute = require('./routes/tariffa');
 const UserRoute = require('./routes/user');
 const RoleRoute = require('./routes/role'); // Importa la route per roles
+const PartnerCreateRoute = require('./routes/partnerCreate'); // Importa la route per la creazione partner
 
 // Associazione delle rotte
 app.use("/api/barche", BarcheRoute);
@@ -49,6 +50,7 @@ app.use("/api/events", EventRoute);
 app.use("/api/tariffe", TariffaRoute);
 app.use("/api/users", UserRoute);
 app.use("/api/roles", RoleRoute); // Registra la route per roles
+app.use("/api/partners", PartnerCreateRoute); // Registra la route per la creazione partner
 
 // Debug: Conferma delle rotte caricate
 if (process.env.NODE_ENV === 'development') {

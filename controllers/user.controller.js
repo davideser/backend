@@ -106,7 +106,7 @@ const userSchema = Joi.object({
   email: Joi.string().email().required(),
   password: Joi.string().min(6).required(),
   roleId: Joi.number().required(),
-  companyId: Joi.number().optional(),
+  companyId: Joi.number().optional().allow(null),
   emailPartner: Joi.string().email().optional(),
   ragioneSociale: Joi.string().optional(),
   codiceFiscale: Joi.string().optional(),
@@ -116,9 +116,19 @@ const userSchema = Joi.object({
 exports.createUser = async (req, res, next) => {
   const t = await sequelize.transaction();
   try {
-    const value = await userSchema.validateAsync(req.body);
+    // Accetta solo roleId, ignora role e companyId vuoto
+    const body = { ...req.body };
+    if (body.role) {
+      body.roleId = Number(body.role);
+      delete body.role;
+    }
+    if (body.companyId === '' || body.companyId === undefined) {
+      delete body.companyId;
+    }
+    const value = await userSchema.validateAsync(body);
     const { username, email, password, roleId, companyId } = value;
     let newCompanyId = companyId;
+    // Partner: crea nuova company
     if (Number(roleId) === 2 && !companyId) {
       const { emailPartner, ragioneSociale, codiceFiscale, partitaIva } = value;
       if (!ragioneSociale || !emailPartner || !codiceFiscale || !partitaIva) {
@@ -127,6 +137,29 @@ exports.createUser = async (req, res, next) => {
       }
       const newCompany = await Company.create(value, { transaction: t });
       newCompanyId = newCompany.id;
+    } else if ((Number(roleId) === 1 || Number(roleId) === 3) && !companyId) {
+      // Admin o Marinaio: associa a Capri Sea Service
+      let capriCompany = await Company.findOne({ where: { name: 'Capri Sea Service' }, transaction: t });
+      if (!capriCompany) {
+        capriCompany = await Company.create({
+          name: 'Capri Sea Service',
+          ragioneSociale: 'Capri Sea Service',
+          cap: '80073',
+          pv: 'NA',
+          codiceFiscale: 'CSS00000000',
+          partitaIva: '00000000000',
+          emailPartner: 'info@capriseaservice.it',
+          partnerType: 'interno',
+          codiceUnivoco: 'CSS000',
+          indirizzo: 'Via Roma 1',
+          capZip: '80073',
+          citta: 'Capri',
+          prov: 'NA',
+          telefonoFisso: '0810000000',
+          cellulare: '3330000000'
+        }, { transaction: t });
+      }
+      newCompanyId = capriCompany.id;
     }
     const hashedPassword = bcrypt.hashSync(password, 10);
     const newUser = await User.create({
@@ -142,6 +175,7 @@ exports.createUser = async (req, res, next) => {
     res.status(201).json({ user: userSafe, companyId: newCompanyId });
   } catch (error) {
     await t.rollback();
+    console.error('Errore dettagliato nella creazione utente:', error);
     next(new AppError('Errore nella creazione utente', 500));
   }
 };
@@ -162,13 +196,18 @@ exports.getUserById = async (req, res, next) => {
 // 📌 Aggiorna utente (solo Admin)
 exports.updateUser = async (req, res, next) => {
   try {
-    if (!req.user || req.user.role !== 'Admin') {
+    const userId = parseInt(req.params.userId);
+    // Solo admin o l'utente stesso può aggiornare
+    if (!req.user || (req.user.role !== 'Admin' && req.user.id !== userId)) {
       return next(new AppError('Accesso negato', 403));
     }
     const { username, email, roleId } = req.body;
+    // Solo admin può cambiare il ruolo
+    const updateData = { username, email };
+    if (req.user.role === 'Admin' && roleId) updateData.roleId = roleId;
     const updated = await User.update(
-      { username, email, roleId },
-      { where: { id: req.params.userId } }
+      updateData,
+      { where: { id: userId } }
     );
     if (!updated[0]) return next(new AppError('Utente non trovato', 404));
     res.status(200).json({ message: 'Utente aggiornato con successo' });
